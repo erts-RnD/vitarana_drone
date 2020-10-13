@@ -24,8 +24,8 @@ find_package(gazebo REQUIRED)
 include_directories( include ${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-find_package(Boost REQUIRED COMPONENTS thread)
-include_directories(${Boost_INCLUDE_DIRS})
+# find_package(Boost REQUIRED COMPONENTS thread)
+# include_directories(${Boost_INCLUDE_DIRS})
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -61,8 +61,7 @@ catkin_package(
 	DEPENDS 
 	    roscpp 
 	    gazebo_ros
-	    gazebo_ros_force 
-      std_msgs 
+	    std_msgs 
       geometry_msgs 
       tf
       message_runtime
