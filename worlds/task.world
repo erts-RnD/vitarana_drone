@@ -1,0 +1,839 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='landing_station_0'>
+      <pose frame=''>2.54467 0.027104 0 0 -0 0</pose>
+      <static>1</static>
+      <link name='body'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://landing_station/meshes/marker_x.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='landing_station_1'>
+      <pose frame=''>2.53045 1.99104 0 0 -0 0</pose>
+      <static>1</static>
+      <link name='body'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://landing_station/meshes/marker_x.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <state world_name='default'>
+      <sim_time>487 69000000</sim_time>
+      <real_time>536 474507860</real_time>
+      <wall_time>1602414057 284629836</wall_time>
+      <iterations>487069</iterations>
+      <model name='edrone'>
+        <pose frame=''>0.00017 1.9e-05 0 0 -0 0.000326</pose>
+        <scale>1 1 1</scale>
+        <link name='base_frame'>
+          <pose frame=''>0.00017 1.9e-05 0 0 -0 0.000326</pose>
+          <velocity>-0 0 0.001544 -0.003174 0.00031 0</velocity>
+          <acceleration>0.213203 2.22002 3.08807 -0.066439 0.620054 -0.007348</acceleration>
+          <wrench>0.213203 2.22002 3.08807 0 -0 0</wrench>
+        </link>
+        <link name='gps'>
+          <pose frame=''>0.00017 1.9e-05 0.31 0 -0 0.000326</pose>
+          <velocity>0.000101 0.000895 0.001549 -0.003191 0.00021 -9e-06</velocity>
+          <acceleration>0.23562 1.70939 3.10251 -0.51385 0.302239 0.033459</acceleration>
+          <wrench>0.002356 0.017094 0.031025 0 -0 0</wrench>
+        </link>
+        <link name='imu'>
+          <pose frame=''>0.00017 1.9e-05 0.3 0 1e-06 0.000326</pose>
+          <velocity>9.2e-05 0.000848 0.001549 -0.00312 0.000174 -9e-06</velocity>
+          <acceleration>0.206348 1.63121 3.10252 -0.531317 0.114866 0.03345</acceleration>
+          <wrench>0.002063 0.016312 0.031025 0 -0 0</wrench>
+        </link>
+        <link name='prop1'>
+          <pose frame=''>0.460021 0.460169 0.41 -1e-06 2e-06 -0.78507</pose>
+          <velocity>0.000109 0.001267 -0.000137 -0.003705 0.001197 7e-06</velocity>
+          <acceleration>0.194245 2.64187 -0.344061 2.73817 -1.22527 0.007599</acceleration>
+          <wrench>0.019425 0.264187 -0.034406 0 -0 0</wrench>
+        </link>
+        <link name='prop2'>
+          <pose frame=''>0.46032 -0.459831 0.409999 0 -1e-06 0.785728</pose>
+          <velocity>0.000152 0.001267 0.002992 -0.003782 -0.000748 7e-06</velocity>
+          <acceleration>0.372886 2.63704 6.18811 2.45842 1.35649 0.007224</acceleration>
+          <wrench>0.037289 0.263704 0.618811 0 -0 0</wrench>
+        </link>
+        <link name='prop3'>
+          <pose frame=''>-0.45968 -0.460131 0.41 -1e-06 1e-06 -0.78507</pose>
+          <velocity>0.000151 0.001245 0.003246 -0.003641 0.001206 7e-06</velocity>
+          <acceleration>0.406949 2.50211 6.58517 1.5533 -0.170259 -3.13403</acceleration>
+          <wrench>0.040695 0.250211 0.658517 0 -0 0</wrench>
+        </link>
+        <link name='prop4'>
+          <pose frame=''>-0.459979 0.459869 0.41 0 -1e-06 0.785728</pose>
+          <velocity>0.00012 0.001258 0.00011 -0.003758 -0.000844 7e-06</velocity>
+          <acceleration>0.189526 2.54649 0.028436 1.90365 0.265362 0.007249</acceleration>
+          <wrench>0.018953 0.254649 0.002844 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='landing_station_0'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='landing_station_1'>
+        <pose frame=''>5 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose frame=''>5 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <model name='edrone'>
+      <static>0</static>
+      <link name='base_frame'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://edrone/meshes/edrone.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='base_collision'>
+          <pose frame=''>0 0.028 0.37 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.466 0.48 0.2</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='stand_1'>
+          <pose frame=''>0.46 0.46 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.09 0.4</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='stand_2'>
+          <pose frame=''>0.46 -0.46 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.09 0.4</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='stand_3'>
+          <pose frame=''>-0.46 -0.46 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.09 0.4</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='stand_4'>
+          <pose frame=''>-0.46 0.46 0.2 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.09 0.4</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.08666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.08666</iyy>
+            <iyz>0</iyz>
+            <izz>0.16666</izz>
+          </inertia>
+          <pose frame=''>0 0 0.35 0 -0 0</pose>
+        </inertial>
+        <sensor name='camera' type='camera'>
+          <pose frame=''>0 0.35 0.38 -0 1.5707 1.5707</pose>
+          <update_rate>30</update_rate>
+          <camera name='head'>
+            <horizontal_fov>1.39626</horizontal_fov>
+            <image>
+              <width>400</width>
+              <height>400</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.4</near>
+              <far>300</far>
+            </clip>
+          </camera>
+          <plugin name='camera_plugin' filename='libgazebo_ros_camera.so'>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>30.0</updateRate>
+            <cameraName>camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>camera_link</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+            <robotNamespace>edrone</robotNamespace>
+            <tf_prefix_>edrone</tf_prefix_>
+          </plugin>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name='range_finder_top' type='ray'>
+          <pose frame=''>0 0 0.5 3.1415 -0 -1.57</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>5</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.1415</min_angle>
+                <max_angle>3.1415</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.06</min>
+              <max>25</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name='lidar_plugin' filename='libgazebo_ros_laser.so'>
+            <robotNamespace>edrone</robotNamespace>
+            <topicName>range_finder_top</topicName>
+            <tf_prefix_>edrone</tf_prefix_>
+            <frameName>/world</frameName>
+          </plugin>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <sensor name='range_finder_bottom' type='ray'>
+          <pose frame=''>0 0 0.25 3.14159 1.5707 3.14159</pose>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>1</samples>
+                <resolution>1</resolution>
+                <min_angle>-0</min_angle>
+                <max_angle>0</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.06</min>
+              <max>25</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name='lidar_plugin' filename='libgazebo_ros_laser.so'>
+            <robotNamespace>edrone</robotNamespace>
+            <topicName>range_finder_bottom</topicName>
+            <tf_prefix_>edrone</tf_prefix_>
+            <frameName>/world</frameName>
+          </plugin>
+          <always_on>1</always_on>
+          <update_rate>20</update_rate>
+          <visualize>0</visualize>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='prop1'>
+        <pose frame=''>0.46 0.46 0.41 0 0 -0.785398</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://edrone/meshes/prop_ccw.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.696 0.1 0.03</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='prop2'>
+        <pose frame=''>0.46 -0.46 0.41 0 -0 0.785398</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://edrone/meshes/prop.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.696 0.1 0.03</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='prop3'>
+        <pose frame=''>-0.46 -0.46 0.41 0 0 -0.785398</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://edrone/meshes/prop_ccw.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.696 0.1 0.03</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='prop4'>
+        <pose frame=''>-0.46 0.46 0.41 0 -0 0.785398</pose>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://edrone/meshes/prop.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.015 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.696 0.1 0.03</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='imu'>
+        <pose frame=''>0 0 0.3 0 -0 0</pose>
+        <inertial>
+          <mass>0.01</mass>
+          <inertia>
+            <ixx>2.1733e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.1733e-06</iyy>
+            <iyz>0</iyz>
+            <izz>1.8e-07</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='gps'>
+        <pose frame=''>0 0 0.31 0 -0 0</pose>
+        <inertial>
+          <mass>0.01</mass>
+          <inertia>
+            <ixx>2.1733e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>2.1733e-06</iyy>
+            <iyz>0</iyz>
+            <izz>1.8e-07</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='prop1_joint' type='revolute'>
+        <parent>base_frame</parent>
+        <child>prop1</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='prop2_joint' type='revolute'>
+        <parent>base_frame</parent>
+        <child>prop2</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <axis>
+          <xyz>0 0 -1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='prop3_joint' type='revolute'>
+        <parent>base_frame</parent>
+        <child>prop3</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='prop4_joint' type='revolute'>
+        <parent>base_frame</parent>
+        <child>prop4</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <axis>
+          <xyz>0 0 -1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='imu_joint' type='fixed'>
+        <parent>base_frame</parent>
+        <child>imu</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+      </joint>
+      <joint name='gps_joint' type='fixed'>
+        <parent>base_frame</parent>
+        <child>gps</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+      </joint>
+      <plugin name='gazebo_edrone_propulsion' filename='libgazebo_edrone_propulsion.so'>
+        <namespace_model>/edrone</namespace_model>
+        <activate_pid_control>yes</activate_pid_control>
+        <prop_kp>1</prop_kp>
+        <prop_ki>0</prop_ki>
+        <prop_kd>0.0</prop_kd>
+        <robotNamespace>edrone</robotNamespace>
+        <bodyName_1>prop1</bodyName_1>
+        <bodyName_2>prop2</bodyName_2>
+        <bodyName_3>prop3</bodyName_3>
+        <bodyName_4>prop4</bodyName_4>
+        <topicName>pwm</topicName>
+      </plugin>
+      <plugin name='imu_plugin' filename='libgazebo_ros_imu.so'>
+        <updateRate>60</updateRate>
+        <alwaysOn>1</alwaysOn>
+        <bodyName>imu</bodyName>
+        <frameName>imu</frameName>
+        <topicName>/edrone/imu/data</topicName>
+        <serviceName>imu_service</serviceName>
+        <gaussianNoise>0.0</gaussianNoise>
+        <updateRate>20.0</updateRate>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+      </plugin>
+      <plugin name='gps_plugin' filename='libgazebo_ros_gps.so'>
+        <updateRate>60</updateRate>
+        <robotNamespace>edrone</robotNamespace>
+        <bodyName>gps</bodyName>
+        <referenceLatitude>19</referenceLatitude>
+        <referenceLongitude>72</referenceLongitude>
+        <referenceHeading>0</referenceHeading>
+        <referenceAltitude>0</referenceAltitude>
+        <topicName>gps</topicName>
+        <velocityTopicName>gps_velocity</velocityTopicName>
+      </plugin>
+      <pose frame=''>-0.007039 -0.088457 0 0 -0 0</pose>
+    </model>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>0.889007 -10.1748 7.28856 0 0.529797 1.5442</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
