@@ -26,7 +26,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //=================================================================================================
 
-#include <vitarana_drone/gazebo_ros_gps.h>
+#include "vitarana_drone/gazebo_ros_gps.h"
 #include <gazebo/physics/physics.hh>
 
 // WGS84 constants
