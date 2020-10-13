@@ -6,7 +6,7 @@
       <link name="body">
         <visual name="visual">
           <geometry>
-            <mesh><uri>model://landing_station/meshes/marker_x.obj</uri></mesh>
+            <mesh><uri>model://landing_station/meshes/marker.obj</uri></mesh>
           </geometry>
         </visual>
       </link>
