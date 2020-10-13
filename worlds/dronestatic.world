@@ -12,6 +12,5 @@
       <pose>0 0 1 0 0 0</pose>
       <static>true</static>
     </include>
-    <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
-    </world>
+  </world>
 </sdf>

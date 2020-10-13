@@ -4,7 +4,6 @@ project(vitarana_drone)
 add_definitions(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  gazebo_ros
   message_generation 
   gazebo_msgs 
   roscpp 
@@ -16,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf 
   tf2_ros
   std_msgs
+  gazebo_ros
 )
 include_directories( include ${catkin_INCLUDE_DIRS})
 
@@ -24,8 +24,8 @@ find_package(gazebo REQUIRED)
 include_directories( include ${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-# find_package(Boost REQUIRED COMPONENTS thread)
-# include_directories(${Boost_INCLUDE_DIRS})
+find_package(Boost REQUIRED COMPONENTS thread)
+include_directories(${Boost_INCLUDE_DIRS})
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -61,7 +61,7 @@ catkin_package(
 	DEPENDS 
 	    roscpp 
 	    gazebo_ros
-	    std_msgs 
+      std_msgs 
       geometry_msgs 
       tf
       message_runtime
