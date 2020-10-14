@@ -307,19 +307,6 @@
 
 <!-- ****************************** Plugins *********************************** -->
 
-    <plugin name="gazebo_edrone_propulsion" filename="libgazebo_edrone_propulsion.so">
-      <namespace_model>/edrone</namespace_model>
-      <activate_pid_control>yes</activate_pid_control>
-      <prop_kp> 1 </prop_kp>
-      <prop_ki> 0 </prop_ki>
-      <prop_kd> 0.0 </prop_kd>
-      <robotNamespace>edrone</robotNamespace>
-      <bodyName_1>prop1</bodyName_1>
-      <bodyName_2>prop2</bodyName_2>
-      <bodyName_3>prop3</bodyName_3>
-      <bodyName_4>prop4</bodyName_4>
-      <topicName>pwm</topicName>
-    </plugin>
 
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <updateRate>60</updateRate>
@@ -344,6 +331,20 @@
       <referenceAltitude>0</referenceAltitude>
       <topicName>gps</topicName>
       <velocityTopicName>gps_velocity</velocityTopicName>
+    </plugin>
+
+    <plugin name="gazebo_edrone_propulsion" filename="libgazebo_edrone_propulsion.so">
+      <namespace_model>/edrone</namespace_model>
+      <activate_pid_control>yes</activate_pid_control>
+      <prop_kp> 1 </prop_kp>
+      <prop_ki> 0 </prop_ki>
+      <prop_kd> 0.0 </prop_kd>
+      <robotNamespace>edrone</robotNamespace>
+      <bodyName_1>prop1</bodyName_1>
+      <bodyName_2>prop2</bodyName_2>
+      <bodyName_3>prop3</bodyName_3>
+      <bodyName_4>prop4</bodyName_4>
+      <topicName>pwm</topicName>
     </plugin>
 
   </model>

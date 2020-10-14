@@ -184,6 +184,8 @@ namespace gazebo
       jointController->SetVelocityTarget(this->prop3_name, 0.0);
       jointController->SetVelocityTarget(this->prop4_name, 0.0);
     }
+    ROS_INFO("Vitarana Drone version 0.1");
+    
   }
 
 
