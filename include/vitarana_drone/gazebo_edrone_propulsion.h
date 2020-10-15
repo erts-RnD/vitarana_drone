@@ -21,7 +21,7 @@
 #include <gazebo/common/common.hh>
 #include <ignition/math/Vector3.hh>
 
-#include <vitarana_drone/prop_speed.h>
+#include "vitarana_drone/prop_speed.h"
 
 #include <functional>
 #include <thread>
