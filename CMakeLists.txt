@@ -74,9 +74,11 @@ catkin_package(
 ###########
 
 add_library(gazebo_edrone_propulsion src/gazebo_edrone_propulsion.cpp)
+# add_dependencies(gazebo_edrone_propulsion vitarana_drone_generate_messages_cpp)
 target_link_libraries (gazebo_edrone_propulsion ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(gazebo_ros_gps src/gazebo_ros_gps.cpp)
+# add_dependencies(gazebo_ros_gps vitarana_drone_generate_messages_cpp)
 target_link_libraries (gazebo_ros_gps ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 
