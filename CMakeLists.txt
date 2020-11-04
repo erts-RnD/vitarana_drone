@@ -37,6 +37,13 @@ include_directories(${Boost_INCLUDE_DIRS})
    edrone_cmd.msg
  )
 
+## Generate services in the 'srv' folder
+add_service_files(
+  FILES
+  Gripper.srv
+
+)
+
  generate_messages(
    DEPENDENCIES
    std_msgs  

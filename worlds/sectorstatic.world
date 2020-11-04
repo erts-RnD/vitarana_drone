@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://sector</uri>
+      <static>true</static>
+    </include>
+    <include>
+      <uri>model://edrone</uri>
+      <pose>102.375977 17.700167 21.849997 0 0 1.5708</pose>
+      <static>true</static>
+    </include>
+  </world>
+</sdf>
