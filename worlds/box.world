@@ -9,7 +9,7 @@
     </include>
     <include>
       <uri>model://edrone</uri>
-      <pose>0 0 3 0 0 0</pose>
+      <pose>3 0 0 0 0 0</pose>
     </include>
     <include>
       <uri>model://cardboard_box</uri>
