@@ -110,8 +110,11 @@ def main():
     r = rospy.Rate(10)
     # rospy.spin() 
     while not rospy.is_shutdown():
-        eDrone_gripper.check()
-        r.sleep()
+        try:
+            eDrone_gripper.check()
+            r.sleep()
+        except rospy.ROSInterruptException:
+            rospy.loginfo("Stdown Request")
            
 
 if __name__ == "__main__":
