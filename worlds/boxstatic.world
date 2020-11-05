@@ -16,5 +16,6 @@
       <uri>model://cardboard_box</uri>
       <pose>3 0 0 0 0 0</pose>
     </include>
+    <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
   </world>
 </sdf>

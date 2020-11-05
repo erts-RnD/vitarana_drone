@@ -17,32 +17,15 @@
       <collision name="collision">
         <geometry>
           <box>
-            <size>0.5 0.4 0.27</size>
+            <size>0.5 0.4 0.26</size>
           </box>
         </geometry>
-        <!-- <surface>
-          <friction>
-            <ode>
-              <mu>1.0</mu>
-              <mu2>1.0</mu2>
-            </ode>
-          </friction>
-          <contact>
-            <ode>
-              <kp>10000000.0</kp>
-              <kd>1.0</kd>
-              <min_depth>0.001</min_depth>
-              <max_vel>0.1</max_vel>
-            </ode>
-          </contact>
-        </surface> -->
       </collision>
       <visual name="visual">
         <pose>0 0 -0.135 0 0 0</pose>
         <geometry>
           <mesh>
             <uri>model://cardboard_box/meshes/cardboard_box.obj</uri>
-            <!-- <scale>1.25931896 1.007455168 0.680322383</scale> -->
           </mesh>
         </geometry>
       </visual>

@@ -3,7 +3,6 @@
   <model name="edrone">
     <static>0</static>
 
-
 <!-- ***************************** Links *********************************** -->    
   
     <link name="base_frame">
@@ -130,7 +129,7 @@
         <always_on>1</always_on>
         <update_rate>20</update_rate>
         <visualize>false</visualize>
-      </sensor>      
+      </sensor>  
     </link>
       
     <link name="prop1">
@@ -255,6 +254,12 @@
 
 
 
+
+
+
+
+
+
 <!-- ************************** Joints ******************************** -->
 
     <joint name="prop1_joint" type="revolute">
@@ -304,6 +309,7 @@
       <child>gps</child>
       <pose>0 0 0 0 0 0</pose>
     </joint>
+
 
 <!-- ****************************** Plugins *********************************** -->
 

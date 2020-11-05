@@ -14,16 +14,17 @@
     </include>
     <include>
       <uri>model://landing_station</uri>
-      <pose>0 0 8.11 0 0 0</pose>
+      <pose>0 0 8.11 0 0 1.5708</pose>
     </include>
-<!--     <include>
+    <include>
       <uri>model://cardboard_box</uri>
-      <pose>72 11 21.850006 0 0 0</pose>
-    </include> -->
+      <pose>78 11 22 0 0 1.5708</pose>
+    </include>
     <gui>
       <camera name="user_camera">
         <pose>109.500000 18 27 0 0.6 3.14</pose>
       </camera>
     </gui> 
+    <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
   </world>
 </sdf>

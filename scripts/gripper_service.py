@@ -1,132 +1,118 @@
 #! /usr/bin/env python
 
 import rospy
+from gazebo_msgs.msg import ModelStates
 from gazebo_ros_link_attacher.srv import Attach, AttachRequest, AttachResponse
-
-from vitarana_drone.srv import Gripper
-from vitarana_drone.srv import GripperRequest
-from vitarana_drone.srv import GripperResponse
-
-from gazebo_logical_camera.msg import LogicalCameraImage
-
-
-class Gripper():
+from vitarana_drone.srv import Gripper, GripperResponse, GripperRequest
+from std_msgs.msg import String
+class edrone_gripper():
 
     # Constructor
     def __init__(self):
-        
-        param_config_gripper = rospy.get_param('config_gripper')
-        
-        self._gripper_model_name = param_config_gripper['gripper_model_name']
-        self._gripper_link_name = param_config_gripper['gripper_link_name']
-        
-        self._object_model_name = param_config_gripper['attachable_object_model_name']
-        self._object_link_name = param_config_gripper['attachable_object_link_name']
-        
-       
-        self._logical_camera_topic_name = param_config_gripper['logical_camera_topic_name']
-        
-        print(param_config_gripper)
-        
-        self._flag_pickable = False
 
-        
-
-        rospy.loginfo("Creating ServiceProxy to /link_attacher_node/attach")
-        self._attach_srv_a = rospy.ServiceProxy('/link_attacher_node/attach',Attach)
-        self._attach_srv_a.wait_for_service()
-        rospy.loginfo("Created ServiceProxy to /link_attacher_node/attach")
-
-        rospy.loginfo("Creating ServiceProxy to /link_attacher_node/detach")
-        self._attach_srv_d = rospy.ServiceProxy('/link_attacher_node/detach',Attach)
-        self._attach_srv_d.wait_for_service()
-        rospy.loginfo("Created ServiceProxy to /link_attacher_node/detach")
-
-        rospy.loginfo( '\033[94m' + " >>> Gripper init done." + '\033[0m')
-
-    
-    def activate_gripper(self):
+      rospy.init_node('node_service_server_gripper')
+      rospy.Subscriber('/gazebo/model_states_throttle', ModelStates, self.model_state_callback)
+      self.check_pub=rospy.Publisher('/edrone/gripper_check',String, queue_size=1)
+      rospy.Service('/edrone/activate_gripper', Gripper, self.callback_service_on_request)
       
-      rospy.loginfo("Attach request received")
-      req = AttachRequest()
-      req.model_name_1 = self._gripper_model_name
-      req.link_name_1 = self._gripper_link_name
-      req.model_name_2 = self._object_model_name
-      req.link_name_2 = self._object_link_name
-      self._attach_srv_a.call(req)
-
-    
-    
-    def deactivate_gripper(self):
+      self._attach_srv_a = rospy.ServiceProxy('/link_attacher_node/attach',Attach)
+      self._attach_srv_a.wait_for_service()
       
-      rospy.loginfo("Detach request received")
-      req = AttachRequest()
-      req.model_name_1 = self._gripper_model_name
-      req.link_name_1 = self._gripper_link_name
-      req.model_name_2 = self._object_model_name
-      req.link_name_2 = self._object_link_name
-      self._attach_srv_d.call(req)
+      self._attach_srv_d = rospy.ServiceProxy('/link_attacher_node/detach',Attach)
+      self._attach_srv_d.wait_for_service()
 
-    
-    def callback_service_on_request(self, req):
-        rospy.loginfo( '\033[94m' + " >>> Gripper Activate: {}".format(req.activatem_gripper) + '\033[0m')
-        rospy.loginfo( '\033[94m' + " >>> Gripper Flag Pickable: {}".format(self._flag_pickable) + '\033[0m')
+      self.model_state_msg = ModelStates()
+      self.box_model_name='cardboard_box'
+      self.drone_model_name='edrone'
+      self.box_index= 0 
+      self.drone_index=0
+      self.pickable_flag = 'False'
 
-        if( (req.activate_gripper == True) and (self._flag_pickable == True) ):
-            self.activate_gripper()
-            return GripperResponse(True)
-        else:
-            # self._flag_pickable = False
-            self.deactivate_gripper()
-            return GripperResponse(False)
-        
-        
-
-    def callback_topic_subscription(self, rx_msg):
-        # rospy.loginfo( '\033[94m' + "{}".format(rx_msg) + '\033[0m')
-        
-        number_models = len(rx_msg.models)
-        
-        flag_attachable_object_found = False
-
-        for i in range(0, number_models):
-            name_model = rx_msg.models[i].type
-            
-            if(name_model == self._attachable_object_prefix):
-                rospy.loginfo( '\033[94m' + " >>> Gripper: Pickable object found {}".format(name_model) + '\033[0m')
-                
-                self._object_model_name = name_model
-
-                flag_attachable_object_found = True
-                self._flag_pickable = True
-                break
-            
-        if(flag_attachable_object_found == False):
-            self._flag_pickable = False
-            
-        
-        
+      self.box_coordinates = [0.0, 0.0, 0.0]
+      self.drone_coordinates = [0.0, 0.0, 0.0]
 
     # Destructor
     def __del__(self):
         rospy.loginfo( '\033[94m' + " >>> Gripper Del." + '\033[0m')
 
 
+    def model_state_callback(self,msg):
+        self.model_state_msg.name = msg.name
+        self.model_state_msg.pose = msg.pose
+        self.model_state_msg.twist = msg.twist
+      
 
+    def callback_service_on_request(self, req):
+        rospy.loginfo( '\033[94m' + " >>> Gripper Activate: {}".format(req.activate_gripper) + '\033[0m')
+        rospy.loginfo( '\033[94m' + " >>> Gripper Flag Pickable: {}".format(self.pickable_flag) + '\033[0m')
+
+        if( (req.activate_gripper == True) and (self.pickable_flag == 'True') ):
+          self.activate_gripper()
+          return GripperResponse(True)
+        else:
+          self.deactivate_gripper()
+          return GripperResponse(False)
+      
+
+    def activate_gripper(self):
+        rospy.loginfo("Attach request received")
+        req = AttachRequest()
+        req.model_name_1 = 'edrone'
+        req.link_name_1 = 'base_frame'
+        req.model_name_2 = 'cardboard_box'
+        req.link_name_2 = 'link'
+        self._attach_srv_a.call(req)
+      
+    
+    def deactivate_gripper(self):
+        rospy.loginfo("Detach request received")
+        req = AttachRequest()
+        req.model_name_1 = 'edrone'
+        req.link_name_1 = 'base_frame'
+        req.model_name_2 = 'cardboard_box'
+        req.link_name_2 = 'link'
+        self._attach_srv_d.call(req)
+      
+
+
+    def check(self):
+        try:
+            self.box_index = self.model_state_msg.name.index(self.box_model_name)
+            self.box_coordinates[0] = self.model_state_msg.pose[self.box_index].position.x
+            self.box_coordinates[1] = self.model_state_msg.pose[self.box_index].position.y
+            self.box_coordinates[2] = self.model_state_msg.pose[self.box_index].position.z
+        except:
+            self.box_index = -1
+
+
+        try:
+            self.drone_index = self.model_state_msg.name.index(self.drone_model_name)
+            self.drone_coordinates[0] = self.model_state_msg.pose[self.drone_index].position.x
+            self.drone_coordinates[1] = self.model_state_msg.pose[self.drone_index].position.y
+            self.drone_coordinates[2] = self.model_state_msg.pose[self.drone_index].position.z
+        except:
+            self.drone_index = -1
+
+
+        if (self.box_index!=-1 and self.drone_index!=-1):
+            if(abs(self.drone_coordinates[0]-self.box_coordinates[0])<0.1 and abs(self.drone_coordinates[1]-self.box_coordinates[1])<0.1 and (self.box_coordinates[2]-self.drone_coordinates[2])>0.105 and (self.box_coordinates[2]-self.drone_coordinates[2])>0):
+                self.pickable_flag='True'
+            else:
+                self.pickable_flag = 'False'
+        else:
+            self.pickable_flag = 'False'
+
+        self.check_pub.publish(self.pickable_flag)
 
 
 def main():
-    rospy.init_node('node_service_server_gripper')
-    
-    eDrone_gripper = Gripper()
-    
-    s = rospy.Service('/eyrc/vb/eDrone_1/activate_gripper', Gripper, eDrone_gripper.callback_service_on_request)
-    rospy.loginfo( '\033[94m' + " >>> Gripper Activation Service Ready." + '\033[0m')
-    
-    rospy.Subscriber(eDrone_gripper._logical_camera_topic_name, LogicalCameraImage, eDrone_gripper.callback_topic_subscription)
-    
-    rospy.spin()
-
+    eDrone_gripper = edrone_gripper()
+    r = rospy.Rate(10)
+    # rospy.spin() 
+    while not rospy.is_shutdown():
+        eDrone_gripper.check()
+        r.sleep()
+           
 
 if __name__ == "__main__":
     main()
