@@ -19,7 +19,7 @@ class edrone_gripper():
         self._attach_srv_d = rospy.ServiceProxy('/link_attacher_node/detach', Attach)
         self._attach_srv_d.wait_for_service()
         self.model_state_msg = ModelStates()
-        self.box_model_name = 'cardboard_box'
+        self.box_model_name = 'parcel_box'
         self.drone_model_name = 'edrone'
         self.box_index = 0
         self.drone_index = 0
@@ -56,7 +56,7 @@ class edrone_gripper():
         req = AttachRequest()
         req.model_name_1 = 'edrone'
         req.link_name_1 = 'base_frame'
-        req.model_name_2 = 'cardboard_box'
+        req.model_name_2 = 'parcel_box'
         req.link_name_2 = 'link'
         self._attach_srv_a.call(req)
 
@@ -65,7 +65,7 @@ class edrone_gripper():
         req = AttachRequest()
         req.model_name_1 = 'edrone'
         req.link_name_1 = 'base_frame'
-        req.model_name_2 = 'cardboard_box'
+        req.model_name_2 = 'parcel_box'
         req.link_name_2 = 'link'
         self._attach_srv_d.call(req)
 

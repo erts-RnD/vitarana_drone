@@ -20,7 +20,7 @@
       <pose>0 0 8.11 0 0 0</pose>
     </include>
     <include>
-      <uri>model://cardboard_box</uri>
+      <uri>model://parcel_box</uri>
       <pose>78 11 22 0 0 0</pose>
     </include>
     <gui>
