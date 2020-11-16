@@ -3,6 +3,12 @@
   <world name="default">
     <scene>
       <shadows>false</shadows>
+      <grid>false</grid>
+      <sky>
+        <clouds>
+          <speed>4</speed>
+        </clouds>
+      </sky>
     </scene>
     <include>
       <uri>model://sun</uri>
@@ -17,7 +23,7 @@
     </include>
     <include>
       <uri>model://landing_station</uri>
-      <pose>0 0 8.11 0 0 0</pose>
+      <pose>0 0 8.08 0 0 0</pose>
     </include>
     <include>
       <uri>model://parcel_box</uri>
