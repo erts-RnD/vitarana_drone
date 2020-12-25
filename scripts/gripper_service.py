@@ -19,14 +19,8 @@ class edrone_gripper():
         self._attach_srv_d = rospy.ServiceProxy('/link_attacher_node/detach', Attach)
         self._attach_srv_d.wait_for_service()
         self.model_state_msg = ModelStates()
-        self.box_model_name = 'parcel_box'
+        self.box_model_name_list = ['parcel_box_0', 'parcel_box_1', 'parcel_box_2', 'parcel_box_3', 'parcel_box_4', 'parcel_box_5', 'parcel_box_6', 'parcel_box_7', 'parcel_box_8', 'parcel_box_9', 'parcel_box_10', 'parcel_box_11', 'parcel_box_12', 'parcel_box_13', 'parcel_box_14', 'parcel_box_15', 'parcel_box_16', 'parcel_box_17']
         self.drone_model_name = 'edrone'
-        self.box_index = 0
-        self.drone_index = 0
-        self.pickable_flag = 'False'
-
-        self.box_coordinates = [0.0, 0.0, 0.0]
-        self.drone_coordinates = [0.0, 0.0, 0.0]
         rospy.Subscriber('/gazebo/model_states_throttle', ModelStates, self.model_state_callback)
         self.check_pub = rospy.Publisher('/edrone/gripper_check', String, queue_size=1)
         self.gripper_service = rospy.Service('/edrone/activate_gripper', Gripper, self.callback_service_on_request)
@@ -41,59 +35,65 @@ class edrone_gripper():
         self.model_state_msg.twist = msg.twist
 
     def callback_service_on_request(self, req):
+        pickable, box_name = self.check()
         rospy.loginfo('\033[94m' + " >>> Gripper Activate: {}".format(req.activate_gripper) + '\033[0m')
-        rospy.loginfo('\033[94m' + " >>> Gripper Flag Pickable: {}".format(self.pickable_flag) + '\033[0m')
-
-        if((req.activate_gripper == True) and (self.pickable_flag == 'True') ):
-            self.activate_gripper()
-            return GripperResponse(True)
+        rospy.loginfo('\033[94m' + " >>> Gripper Flag Pickable: {}".format(str(pickable)) + '\033[0m')
+        if pickable:
+            if(req.activate_gripper is True):
+                self.activate_gripper(box_name)
+                return GripperResponse(True)
+            else:
+                self.deactivate_gripper(box_name)
+                return GripperResponse(False)
         else:
-            self.deactivate_gripper()
             return GripperResponse(False)
 
-    def activate_gripper(self):
+    def activate_gripper(self, model_name_2):
         rospy.loginfo("Attach request received")
         req = AttachRequest()
         req.model_name_1 = 'edrone'
         req.link_name_1 = 'base_frame'
-        req.model_name_2 = 'parcel_box'
+        req.model_name_2 = model_name_2
         req.link_name_2 = 'link'
         self._attach_srv_a.call(req)
 
-    def deactivate_gripper(self):
+    def deactivate_gripper(self, model_name_2):
         rospy.loginfo("Detach request received")
         req = AttachRequest()
         req.model_name_1 = 'edrone'
         req.link_name_1 = 'base_frame'
-        req.model_name_2 = 'parcel_box'
+        req.model_name_2 = model_name_2
         req.link_name_2 = 'link'
         self._attach_srv_d.call(req)
 
     def check(self):
         try:
-            self.box_index = self.model_state_msg.name.index(self.box_model_name)
-            self.box_coordinates[0] = self.model_state_msg.pose[self.box_index].position.x
-            self.box_coordinates[1] = self.model_state_msg.pose[self.box_index].position.y
-            self.box_coordinates[2] = self.model_state_msg.pose[self.box_index].position.z
+            drone_index = self.model_state_msg.name.index(self.drone_model_name)
+            dr_0 = self.model_state_msg.pose[drone_index].position.x
+            dr_1 = self.model_state_msg.pose[drone_index].position.y
+            dr_2 = self.model_state_msg.pose[drone_index].position.z
         except Exception as err:
-            self.box_index = -1
-        try:
-            self.drone_index = self.model_state_msg.name.index(self.drone_model_name)
-            self.drone_coordinates[0] = self.model_state_msg.pose[self.drone_index].position.x
-            self.drone_coordinates[1] = self.model_state_msg.pose[self.drone_index].position.y
-            self.drone_coordinates[2] = self.model_state_msg.pose[self.drone_index].position.z
-        except Exception as err:
-            self.drone_index = -1
+            drone_index = -1
+        pickable = False
+        box_name = "None"
+        if drone_index != -1:
+            for box_model_name in self.box_model_name_list:
+                try:
+                    box_index = self.model_state_msg.name.index(box_model_name)
+                    bx_0 = self.model_state_msg.pose[box_index].position.x
+                    bx_1 = self.model_state_msg.pose[box_index].position.y
+                    bx_2 = self.model_state_msg.pose[box_index].position.z
+                except Exception as err:
+                    box_index = -1
+                if(box_index != -1):
+                    if(abs(dr_0 - bx_0) < 0.1 and abs(dr_1 - bx_1) < 0.1 and (bx_2 - dr_2) > 0.105):
+                        pickable = True
+                        box_name = box_model_name
+                        break
+        return pickable, box_name
 
-        if (self.box_index != -1 and self.drone_index !=-1 ):
-            if(abs(self.drone_coordinates[0] - self.box_coordinates[0]) < 0.1 and abs(self.drone_coordinates[1] - self.box_coordinates[1]) < 0.1 and (self.box_coordinates[2]-self.drone_coordinates[2])>0.105 and (self.box_coordinates[2]-self.drone_coordinates[2])>0):
-                self.pickable_flag = 'True'
-            else:
-                self.pickable_flag = 'False'
-        else:
-            self.pickable_flag = 'False'
-
-        self.check_pub.publish(self.pickable_flag)
+    def publish_check(self, pickable_flag):
+        self.check_pub.publish(str(pickable_flag))
 
 
 def main():
@@ -101,7 +101,8 @@ def main():
     r = rospy.Rate(10)
     while not rospy.is_shutdown():
         try:
-            eDrone_gripper.check()
+            pickable, _ = eDrone_gripper.check()
+            eDrone_gripper.publish_check(pickable)
             r.sleep()
         except rospy.ROSInterruptException:
             rospy.logerr("Shtdown Req")
