@@ -34,7 +34,7 @@
       <static>true</static>
     </include>
     <include>
-      <uri>model://mat</uri>
+      <uri>model://delivery</uri>
       <pose>0 4.5 8.134603 0 0 0</pose>
     </include>
     <include>
