@@ -78,7 +78,6 @@
         <pose>-21 -18 16.454361 0 0 0</pose>
     </include>
     <include>
-    <include>
       <uri>model://parcel_box</uri>
       <name>parcel_box_8</name>
       <pose>-19.5 -18 16.454361 0 0 0</pose>
@@ -134,15 +133,10 @@
       <pose>114.531471 -97.052532 21.805258 0 0 0</pose>
     </include>               
     <include>
-    <include>
       <uri>model://edrone</uri>
       <static>1</static>
       <pose>-12.31 -23 16.447981 0 0 0</pose>
     </include>
-<!--     <include>
-      <uri>model://mat</uri>
-      <pose>0 4.5 8.134603 0 0 0</pose>
-    </include> -->
     <gui>
       <camera name="user_camera">
         <pose>-12.31 -50.551014 37.282482 0 0.540000 1.567200</pose>
@@ -151,3 +145,4 @@
     <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
   </world>
 </sdf>
+
